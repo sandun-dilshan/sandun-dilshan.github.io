@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sandun Dilshan —  Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── THEME TOKENS ── */
+[data-theme="light"] {
+  --bg:       #f8f5ef;
+  --surface:  #ffffff;
+  --surface2: #f2f0ea;
+  --border:   #e0ddd5;
+  --border2:  #ccc9c0;
+  --text:     #1a1a1a;
+  --text2:    #4a4540;
+  --muted:    #9a9589;
+  --navy:     #0d1f3c;
+  --navy-rgb: 13,31,60;
+  --gold:     #b8963e;
+  --gold-lt:  #f0dfa0;
+  --shadow:   0 2px 16px rgba(13,31,60,0.10);
+  --nav-bg:   #0d1f3c;
+  --tag-bg:   #f2f0ea;
+  --ptag-bg:  rgba(13,31,60,0.07);
+  --ptag-col: #0d1f3c;
+  --toggle-icon: "🌙";
+}
+[data-theme="dark"] {
+  --bg:       #0f1520;
+  --surface:  #1a2236;
+  --surface2: #141c2e;
+  --border:   #2a3450;
+  --border2:  #3a4460;
+  --text:     #e8e4db;
+  --text2:    #b0a898;
+  --muted:    #6a6460;
+  --navy:     #c8a84b;
+  --navy-rgb: 200,168,75;
+  --gold:     #c8a84b;
+  --gold-lt:  #f0dfa0;
+  --shadow:   0 2px 20px rgba(0,0,0,0.40);
+  --nav-bg:   #0a1020;
+  --tag-bg:   #1f2d45;
+  --ptag-bg:  rgba(200,168,75,0.12);
+  --ptag-col: #f0dfa0;
+  --toggle-icon: "☀";
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.7;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* ── SCROLL ANIMATION BASE ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.stagger > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
+.stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:0.12s; }
+.stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:0.19s; }
+.stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:0.26s; }
+.stagger.visible > *:nth-child(5) { opacity:1; transform:none; transition-delay:0.33s; }
+.stagger.visible > *:nth-child(6) { opacity:1; transform:none; transition-delay:0.40s; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--nav-bg);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  height: 58px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.30);
+  transition: background 0.3s;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--gold-lt);
+  letter-spacing: 0.04em;
+}
+.nav-right { display: flex; align-items: center; gap: 2rem; }
+.nav-links { display: flex; gap: 1.8rem; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,0.70);
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold-lt); }
+
+/* Dark mode toggle */
+#theme-toggle {
+  background: rgba(255,255,255,0.1);
+  border: 0.5px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 0.28rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  transition: background 0.2s;
+  display: flex; align-items: center; gap: 0.4rem;
+  white-space: nowrap;
+}
+#theme-toggle:hover { background: rgba(184,150,62,0.3); }
+
+/* ── HERO ── */
+.hero {
+  background: var(--nav-bg);
+  color: white;
+  padding: 5rem 3rem 4.5rem;
+  display: flex; align-items: center; gap: 3.5rem;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 340px; height: 340px;
+  border: 2px solid rgba(184,150,62,0.18);
+  border-radius: 50%;
+  animation: rotateRing 20s linear infinite;
+}
+.hero::after {
+  content: '';
+  position: absolute; top: 30px; right: 30px;
+  width: 200px; height: 200px;
+  border: 1px solid rgba(184,150,62,0.10);
+  border-radius: 50%;
+  animation: rotateRing 14s linear infinite reverse;
+}
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.avatar {
+  width: 140px; height: 140px; flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold) 0%, #8a6820 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem; font-weight: 700; color: white;
+  border: 3px solid rgba(255,255,255,0.15);
+  position: relative; z-index: 1;
+  animation: avatarIn 0.9s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes avatarIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.hero-text { position: relative; z-index: 1; }
+.hero-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.6rem; font-weight: 700;
+  line-height: 1.2; margin-bottom: 0.4rem;
+  animation: slideUp 0.7s 0.2s ease both;
+}
+.hero-title {
+  color: var(--gold-lt);
+  font-size: 1.05rem; font-weight: 300;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 1rem;
+  animation: slideUp 0.7s 0.35s ease both;
+}
+.hero-bio {
+  color: rgba(255,255,255,0.72);
+  font-size: 0.97rem;
+  max-width: 520px; margin-bottom: 1.6rem; font-weight: 300;
+  animation: slideUp 0.7s 0.5s ease both;
+}
+.hero-contacts {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  animation: slideUp 0.7s 0.65s ease both;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.contact-pill {
+  display: flex; align-items: center; gap: 0.45rem;
+  background: rgba(255,255,255,0.08);
+  border: 0.5px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  padding: 0.35rem 1rem;
+  font-size: 0.82rem; color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.contact-pill:hover { background: rgba(184,150,62,0.25); }
+.contact-pill svg { opacity: 0.7; }
+
+/* ── GITHUB STATS SECTION ── */
+.github-banner {
+  background: var(--surface2);
+  border-bottom: 0.5px solid var(--border);
+  padding: 1.6rem 3rem;
+  transition: background 0.3s;
+}
+.github-stats-row {
+  max-width: 1000px; margin: 0 auto;
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+}
+.gh-label {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.82rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted);
+  flex-shrink: 0;
+}
+.gh-label svg { color: var(--gold); }
+.gh-username {
+  font-weight: 600; color: var(--gold);
+  font-size: 0.9rem; margin-left: 0.2rem;
+}
+.gh-cards { display: flex; gap: 1rem; flex-wrap: wrap; flex: 1; }
+.gh-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--text);
+  transition: background 0.3s, border 0.3s;
+  min-width: 110px;
+}
+.gh-card .gh-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 600;
+  color: var(--gold); line-height: 1;
+}
+.gh-card .gh-desc { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+.gh-stat-block { display: flex; flex-direction: column; }
+.gh-loading { color: var(--muted); font-size: 0.85rem; font-style: italic; }
+.gh-error { color: #e05; font-size: 0.82rem; }
+.gh-langs { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+.gh-lang-pill {
+  background: var(--tag-bg);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0.18rem 0.6rem;
+  font-size: 0.74rem; color: var(--text2);
+}
+.gh-lang-dot {
+  display: inline-block; width: 8px; height: 8px;
+  border-radius: 50%; margin-right: 3px; vertical-align: middle;
+}
+/* Activity bar */
+.gh-activity { flex: 1; min-width: 200px; }
+.gh-activity-label { font-size: 0.74rem; color: var(--muted); margin-bottom: 0.35rem; }
+.activity-grid { display: flex; gap: 2px; align-items: flex-end; height: 32px; }
+.activity-bar {
+  flex: 1; border-radius: 2px;
+  background: var(--gold);
+  opacity: 0.15;
+  transition: opacity 0.2s, height 0.8s ease;
+  min-height: 3px;
+}
+.activity-bar.active { opacity: 0.85; }
+
+/* ── MAIN ── */
+main { max-width: 1000px; margin: 0 auto; padding: 0 2rem 4rem; }
+section { padding: 3.5rem 0 0; }
+
+.section-label {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+.section-label span {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem; font-weight: 600;
+  color: var(--text); white-space: nowrap;
+}
+.section-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+}
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.about-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border 0.3s, transform 0.2s;
+}
+.about-card:hover { transform: translateY(-2px); }
+.about-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 0.7rem;
+}
+.about-card p { font-size: 0.93rem; color: var(--text2); }
+
+/* ── SKILLS ── */
+.skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.skill-group {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border 0.3s, transform 0.2s;
+}
+.skill-group:hover { transform: translateY(-2px); }
+.skill-group h3 {
+  font-size: 0.8rem; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--gold);
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.9rem;
+}
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  background: var(--tag-bg);
+  border: 0.5px solid var(--border);
+  border-radius: 3px;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.8rem; color: var(--text2);
+  transition: background 0.3s;
+}
+
+/* ── PROJECTS ── */
+.projects-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.project-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: var(--shadow);
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem; align-items: start;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+.project-card:hover { transform: translateX(4px); }
+.project-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.08rem; color: var(--text);
+  margin-bottom: 0.35rem;
+}
+.project-card p { font-size: 0.91rem; color: var(--text2); }
+.project-meta { text-align: right; }
+.project-year { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em; white-space: nowrap; }
+.project-tags { margin-top: 0.7rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.p-tag {
+  background: var(--ptag-bg);
+  color: var(--ptag-col);
+  border-radius: 3px;
+  padding: 0.18rem 0.55rem;
+  font-size: 0.75rem;
+  transition: background 0.3s;
+}
+
+/* ── CERTIFICATIONS ── */
+.certs-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; }
+.cert-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: var(--shadow);
+  display: flex; gap: 1rem; align-items: flex-start;
+  transition: background 0.3s, border 0.3s, transform 0.2s;
+}
+.cert-card:hover { transform: translateY(-2px); }
+.cert-badge {
+  width: 42px; height: 42px; flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--nav-bg);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold-lt);
+  font-size: 0.85rem; font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  transition: background 0.3s;
+}
+[data-theme="dark"] .cert-badge { background: rgba(200,168,75,0.15); color: var(--gold-lt); }
+.cert-body h3 { font-size: 0.93rem; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+.cert-body p { font-size: 0.8rem; color: var(--muted); }
+.cert-body .cert-date { font-size: 0.78rem; color: var(--gold); margin-top: 0.25rem; }
+
+/* ── RESEARCH ── */
+.research-list { display: flex; flex-direction: column; gap: 1.25rem; }
+.research-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: var(--shadow);
+  transition: background 0.3s, border 0.3s;
+}
+.research-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.4rem; }
+.research-card p { font-size: 0.91rem; color: var(--text2); margin-bottom: 0.6rem; }
+.research-card .pub-info { font-size: 0.8rem; color: var(--gold); font-style: italic; }
+
+/* ── SCHOLARSHIP ── */
+.statement-box {
+  background: var(--nav-bg);
+  color: white;
+  border-radius: 4px;
+  padding: 2.4rem 2.8rem;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+[data-theme="dark"] .statement-box { background: #1a2a18; border: 0.5px solid #2a4a28; }
+.statement-box::before {
+  content: '"';
+  position: absolute; top: -10px; left: 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 9rem; line-height: 1;
+  color: rgba(184,150,62,0.18);
+  pointer-events: none;
+}
+.statement-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--gold-lt);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 1.2rem;
+}
+.statement-box p {
+  font-size: 0.97rem; font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.85; max-width: 680px;
+  margin-bottom: 1rem; position: relative; z-index: 1;
+}
+
+/* ── EDUCATION ── */
+.edu-timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+.edu-timeline::before {
+  content: '';
+  position: absolute; left: 16px; top: 0; bottom: 0; width: 1px;
+  background: var(--border);
+}
+.edu-item { display: flex; gap: 1.6rem; padding: 0 0 2rem 0; position: relative; }
+.edu-dot {
+  flex-shrink: 0; width: 33px; height: 33px;
+  border-radius: 50%; background: var(--nav-bg);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  color: var(--gold-lt); font-size: 0.75rem; font-weight: 600;
+  transition: background 0.3s;
+}
+[data-theme="dark"] .edu-dot { background: #1a2236; }
+.edu-body {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  padding: 1.1rem 1.4rem;
+  box-shadow: var(--shadow); flex: 1;
+  transition: background 0.3s, border 0.3s;
+}
+.edu-body h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
+.edu-body .edu-inst { font-size: 0.88rem; color: var(--gold); font-weight: 600; margin-bottom: 0.15rem; }
+.edu-body .edu-year { font-size: 0.8rem; color: var(--muted); }
+.edu-body p { font-size: 0.88rem; color: var(--text2); margin-top: 0.4rem; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--nav-bg);
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 1.8rem;
+  font-size: 0.82rem;
+  margin-top: 4rem;
+  transition: background 0.3s;
+}
+footer span { color: var(--gold-lt); }
+
+/* ── PROGRESS BAR (page scroll) ── */
+#progress-bar {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 2px; width: 0%;
+  background: var(--gold);
+  transition: width 0.1s linear;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 760px) {
+  nav { padding: 0 1rem; }
+  .nav-links { display: none; }
+  .hero { flex-direction: column; gap: 2rem; padding: 3rem 1.5rem; }
+  main { padding: 0 1.2rem 3rem; }
+  .about-grid, .skills-grid, .certs-grid { grid-template-columns: 1fr; }
+  .project-card { grid-template-columns: 1fr; }
+  .project-meta { text-align: left; }
+  .statement-box { padding: 1.8rem 1.5rem; }
+  .hero-text h1 { font-size: 2rem; }
+  .github-banner { padding: 1.2rem 1.5rem; }
+  .gh-cards { gap: 0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Page scroll progress bar -->
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Sandun D. Abeywickrama</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#github">GitHub</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#scholarship">Scholarship</a></li>
+    </ul>
+    <button id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+      <svg id="moon-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg id="sun-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <span id="toggle-label">Light</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="avatar">AS</div>
+  <div class="hero-text">
+    <h1>Sandun Dilshan Abeywickrama</h1>
+    <div class="hero-title">B.IT. in ICT &nbsp;·&nbsp; Fresh Graduate &nbsp;·&nbsp; Available for Opportunities</div>
+    <p class="hero-bio">
+     I am a results-driven B.IT. graduate in Information and Communication Technology with a passion for solving real-world challenges through technology. Experienced in software development, embedded systems, and data-driven problem solving.</br>
+
+I am eager to contribute to innovative projects and pursue graduate scholarships to push the boundaries of technology further. My goal is to combine creativity and technical expertise to develop solutions that make an impact.
+    </p>
+    <div class="hero-contacts">
+      <a class="contact-pill" href="mailto:alex.santos@email.com">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1 4l7 5 7-5" stroke="currentColor" stroke-width="1.4"/></svg>
+        dilshansaduu@email.com
+      </a>
+      <a class="contact-pill" href="#">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5.5" cy="5.5" r="1.2" fill="currentColor"/><path d="M3 14v-5h2v5M7 14V9c0-1.1.9-2 2-2s2 .9 2 2v5M13 14V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        linkedin.com/in/sandun-dilshan-7
+      </a>
+      <a class="contact-pill" href="#">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.13 1 1 4.13 1 8c0 3.09 2 5.71 4.79 6.64.35.06.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.62 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.93-1.55-.18-3.19-.78-3.19-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72A6.7 6.7 0 0 1 8 4.5c.6 0 1.2.08 1.76.23 1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.94c0 .19.13.4.48.34A7 7 0 0 0 15 8c0-3.87-3.13-7-7-7z" fill="currentColor"/></svg>
+        github.com/sandun-dilshan
+      </a>
+      <span class="contact-pill">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1.5A4.5 4.5 0 0 1 12.5 6c0 3-4.5 8.5-4.5 8.5S3.5 9 3.5 6A4.5 4.5 0 0 1 8 1.5z" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="6" r="1.5" stroke="currentColor" stroke-width="1.3"/></svg>
+        Galle, Sri Lanka
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- GITHUB LIVE STATS -->
+<div class="github-banner" id="github">
+  <div class="github-stats-row">
+    <div class="gh-label">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub Live Stats &nbsp;·&nbsp; <span class="gh-username">@sandun-dilshan</span>
+    </div>
+    <div class="gh-cards" id="gh-cards">
+      <div class="gh-loading">Loading GitHub data...</div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label reveal">
+      <span>About Me</span><div class="section-line"></div>
+    </div>
+    <div class="about-grid stagger">
+      <div class="about-card">
+        <h3>Professional Summary</h3>
+        <p>Engineering graduate with strong foundations in software systems, embedded hardware, and data analysis. Demonstrated ability to lead technical teams, deliver complete project lifecycles, and communicate complex ideas with clarity.</p>
+      </div>
+      <div class="about-card">
+        <h3>What I Bring</h3>
+        <p>A proactive mindset combined with rigorous analytical thinking. I thrive in environments that blend creative problem-solving with structured engineering practice, working both independently and within cross-functional teams.</p>
+      </div>
+      <div class="about-card">
+        <h3>Career Objective</h3>
+        <p>Seeking entry-level engineering roles in software development, systems engineering, or IoT that allow me to contribute meaningfully from day one while growing within a forward-thinking organisation.</p>
+      </div>
+      <div class="about-card">
+        <h3>Scholarship Goal</h3>
+        <p>Aspiring to pursue a Master's degree in Computer Engineering or Artificial Intelligence at a world-class institution — focused on building intelligent systems that address real societal problems in developing economies.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-label reveal">
+      <span>Education</span><div class="section-line"></div>
+    </div>
+    <div class="edu-timeline">
+      <div class="edu-item reveal-left">
+        <div class="edu-dot">BSc</div>
+        <div class="edu-body">
+          <h3>Bachelor of Information and Communication Technology (Hons)</h3>
+          <div class="edu-inst">South Eastern University of Sri Lanka</div>
+          <div class="edu-year">2021 – 2025</div>
+          <p>Specialisation in Software Technology. Final year project and Reserch: Smart Motorcycle Control System (IoT) With Biometric Authentication and Mobile Application.</p>
+        </div>
+      </div>
+      <div class="edu-item reveal-left">
+        <div class="edu-dot">A/L</div>
+        <div class="edu-body">
+          <h3>Advanced Level — Engineering Technology, Science for Technology, ICT</h3>
+          <div class="edu-inst">Elakaka Secondary School, Galle</div>
+          <div class="edu-year">2016 – 2018</div>
+         <!--<p>Achieved 3 A grades. Island rank: 47. Represented school at National ICT Olympiad.</p> --> 
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label reveal">
+      <span>Skills &amp; Tools</span><div class="section-line"></div>
+    </div>
+    <div class="skills-grid stagger">
+      <div class="skill-group">
+        <h3>Programming Languages</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">C/C++</span><span class="tag">Java</span>
+          <span class="tag">JavaScript</span><span class="tag">MATLAB</span><span class="tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Frameworks &amp; Libraries</h3>
+        <div class="skill-tags">
+          <span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">React</span>
+          <span class="tag">Node.js</span><span class="tag">Flask</span><span class="tag">Pandas</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Hardware &amp; Embedded</h3>
+        <div class="skill-tags">
+          <span class="tag">Arduino</span><span class="tag">Raspberry Pi</span><span class="tag">STM32</span>
+          <span class="tag">PCB Design</span><span class="tag">Verilog</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>DevOps &amp; Cloud</h3>
+        <div class="skill-tags">
+          <span class="tag">Git</span><span class="tag">Docker</span><span class="tag">Linux</span>
+          <span class="tag">AWS (EC2/S3)</span><span class="tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Engineering Tools</h3>
+        <div class="skill-tags">
+          <span class="tag">AutoCAD</span><span class="tag">SolidWorks</span><span class="tag">Proteus</span>
+          <span class="tag">LTspice</span><span class="tag">ANSYS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Soft Skills</h3>
+        <div class="skill-tags">
+          <span class="tag">Project Management</span><span class="tag">Technical Writing</span>
+          <span class="tag">Team Leadership</span><span class="tag">Presentation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label reveal">
+      <span>Projects &amp; Work</span><div class="section-line"></div>
+    </div>
+    <div class="projects-list stagger">
+      <div class="project-card">
+        <div>
+          <h3>Smart Urban Traffic Management System</h3>
+          <p>Final year capstone project. Developed a real-time traffic signal optimisation system using YOLO-based vehicle detection and a reinforcement learning controller deployed on Raspberry Pi units at intersections. Reduced simulated average wait time by 34% compared to fixed-phase signals.</p>
+          <div class="project-tags">
+            <span class="p-tag">Python</span><span class="p-tag">YOLOv8</span><span class="p-tag">Raspberry Pi</span>
+            <span class="p-tag">Reinforcement Learning</span><span class="p-tag">OpenCV</span>
+          </div>
+        </div>
+        <div class="project-meta"><div class="project-year">2023 – 2024</div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <h3>IoT-Based Indoor Air Quality Monitor</h3>
+          <p>Designed and built a low-cost IoT device measuring CO₂, PM2.5, temperature, and humidity using STM32 microcontroller and custom PCB. Data streamed to AWS IoT Core and visualised on a React dashboard. Deployed in three campus labs as a pilot.</p>
+          <div class="project-tags">
+            <span class="p-tag">STM32</span><span class="p-tag">AWS IoT</span><span class="p-tag">PCB Design</span>
+            <span class="p-tag">React</span><span class="p-tag">MQTT</span>
+          </div>
+        </div>
+        <div class="project-meta"><div class="project-year">2022 – 2023</div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <h3>Automated Crop Disease Detection App</h3>
+          <p>Built a mobile-friendly web application enabling Sri Lankan farmers to photograph crop leaves and receive instant disease diagnosis. CNN model trained on 14,000 labelled images, achieving 91.3% accuracy across 12 disease classes. Presented at IEEE Sri Lanka Section Student Congress 2023.</p>
+          <div class="project-tags">
+            <span class="p-tag">TensorFlow</span><span class="p-tag">Flask</span><span class="p-tag">Docker</span>
+            <span class="p-tag">CNN</span><span class="p-tag">Transfer Learning</span>
+          </div>
+        </div>
+        <div class="project-meta"><div class="project-year">2022</div></div>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <h3>Internship — Software Engineer (6 months)</h3>
+          <p>Worked at WSO2 (Colombo) on the Identity Server team. Contributed to backend API development in Java, wrote unit and integration tests, and participated in two sprint cycles. Mentored by senior engineers and presented improvements to authentication flow performance.</p>
+          <div class="project-tags">
+            <span class="p-tag">Java</span><span class="p-tag">REST APIs</span><span class="p-tag">OAuth 2.0</span>
+            <span class="p-tag">JUnit</span><span class="p-tag">Agile</span>
+          </div>
+        </div>
+        <div class="project-meta"><div class="project-year">Jun – Dec 2023</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-label reveal">
+      <span>Certifications</span><div class="section-line"></div>
+    </div>
+    <div class="certs-grid stagger">
+      <div class="cert-card">
+        <div class="cert-badge">AI</div>
+        <div class="cert-body">
+          <h3>Machine Learning Specialisation</h3>
+          <p>DeepLearning.AI / Coursera — Andrew Ng</p>
+          <div class="cert-date">Issued: August 2023</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">AWS</div>
+        <div class="cert-body">
+          <h3>AWS Certified Cloud Practitioner</h3>
+          <p>Amazon Web Services</p>
+          <div class="cert-date">Issued: March 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">CV</div>
+        <div class="cert-body">
+          <h3>Computer Vision with TensorFlow</h3>
+          <p>DeepLearning.AI / Coursera</p>
+          <div class="cert-date">Issued: November 2022</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">PM</div>
+        <div class="cert-body">
+          <h3>Project Management Fundamentals</h3>
+          <p>PMI / edX</p>
+          <div class="cert-date">Issued: January 2024</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">IoT</div>
+        <div class="cert-body">
+          <h3>Introduction to Embedded Systems</h3>
+          <p>University of Colorado Boulder / Coursera</p>
+          <div class="cert-date">Issued: May 2022</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">SQL</div>
+        <div class="cert-body">
+          <h3>SQL for Data Science</h3>
+          <p>UC Davis / Coursera</p>
+          <div class="cert-date">Issued: July 2021</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="section-label reveal">
+      <span>Research &amp; Publications</span><div class="section-line"></div>
+    </div>
+    <div class="research-list stagger">
+      <div class="research-card">
+        <h3>Adaptive Traffic Signal Control Using Deep Reinforcement Learning in Urban Networks</h3>
+        <p>Investigated the application of Proximal Policy Optimisation (PPO) for multi-intersection traffic signal coordination. Demonstrated a statistically significant reduction in vehicle queue length and average delay across heterogeneous traffic compositions typical in South Asian cities.</p>
+        <div class="pub-info">A.M. Santos, K. Perera, S. Jayasinghe — IEEE ICAC 2024, Colombo &nbsp;·&nbsp; Under Review</div>
+      </div>
+      <div class="research-card">
+        <h3>Low-Cost PM2.5 Sensor Calibration Using Transfer Learning for Tropical Environments</h3>
+        <p>Explored calibration methods for low-cost particulate matter sensors in high-humidity tropical climates. Applied transfer learning from reference-grade sensor data to improve accuracy of low-cost devices by up to 28%, enabling affordable air quality monitoring for developing nations.</p>
+        <div class="pub-info">A.M. Santos, T. Fernando — ICIIS 2023, University of Moratuwa &nbsp;·&nbsp; Published</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCHOLARSHIP -->
+  <section id="scholarship">
+    <div class="section-label reveal">
+      <span>Scholarship Statement of Purpose</span><div class="section-line"></div>
+    </div>
+    <div class="statement-box reveal">
+      <h3>Why I Am Applying for a Master's Scholarship</h3>
+  <p>My journey in Information and Communication Technology has taught me that technology is most meaningful when it solves real-world problems. Growing up in Sri Lanka, I observed how limited infrastructure, security challenges, and transportation issues affect communities with fewer resources. These experiences shaped the way I approach every project, research paper, and innovation throughout my undergraduate years.</p>
+
+  <p>I now seek a Master's degree in Computer Engineering, Embedded Systems, or Artificial Intelligence at a world-class institution — not only to advance my skills but to develop technologies that create tangible societal impact. My work on the Smart Motorcycle Security System, combining biometric authentication, GPS tracking, and IoT-enabled mobile applications, has demonstrated how context-specific engineering solutions can improve safety, accessibility, and efficiency in everyday life.</p>
+
+  <p>I am committed to applying this knowledge in Sri Lanka — through industry, academic research, or mentorship — and to guiding the next generation of engineers who, like me, see a degree not as an endpoint but as the beginning of meaningful, real-world problem solving.</p>
+</div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 <span>Sandun D. Abeywickrama</span> &nbsp;·&nbsp; Professional Portfolio &nbsp;·&nbsp; All Rights Reserved
+</footer>
+
+<script>
+/* ── DARK MODE ── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('moon-icon').style.display = isDark ? 'block' : 'none';
+  document.getElementById('sun-icon').style.display  = isDark ? 'none'  : 'block';
+  document.getElementById('toggle-label').textContent = isDark ? 'Dark' : 'Light';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme','dark');
+    document.getElementById('moon-icon').style.display = 'none';
+    document.getElementById('sun-icon').style.display  = 'block';
+    document.getElementById('toggle-label').textContent = 'Light';
+  }
+})();
+
+/* ── SCROLL PROGRESS BAR ── */
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = Math.round((scrolled / total) * 100) + '%';
+});
+
+/* ── INTERSECTION OBSERVER (scroll reveal) ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .stagger').forEach(el => observer.observe(el));
+
+/* ── GITHUB LIVE STATS ── */
+const GITHUB_USER = 'sandun-dilshan'; // ← Replace with your real GitHub username
+
+const langColors = {
+  Python: '#3572A5', JavaScript: '#f1e05a', Java: '#b07219',
+  'C++': '#f34b7d', TypeScript: '#2b7489', HTML: '#e34c26',
+  CSS: '#563d7c', Shell: '#89e051', C: '#555555', Jupyter: '#DA5B0B'
+};
+
+async function fetchGitHub() {
+  const container = document.getElementById('gh-cards');
+  try {
+    const [userRes, reposRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${GITHUB_USER}`),
+      fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=updated`)
+    ]);
+
+    if (!userRes.ok) throw new Error('User not found');
+    const user  = await userRes.json();
+    const repos = reposRes.ok ? await reposRes.json() : [];
+
+    const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+    const totalForks = repos.reduce((s, r) => s + (r.forks_count || 0), 0);
+
+    // Top languages
+    const langMap = {};
+    repos.forEach(r => { if (r.language) langMap[r.language] = (langMap[r.language]||0)+1; });
+    const topLangs = Object.entries(langMap).sort((a,b)=>b[1]-a[1]).slice(0,5).map(e=>e[0]);
+
+    // Mock activity (12 weeks) — real data needs OAuth
+    const activity = Array.from({length:12}, () => Math.random());
+
+    container.innerHTML = `
+      <div class="gh-card">
+        <div class="gh-stat-block">
+          <span class="gh-num">${user.public_repos}</span>
+          <span class="gh-desc">Repositories</span>
+        </div>
+      </div>
+      <div class="gh-card">
+        <div class="gh-stat-block">
+          <span class="gh-num">${user.followers}</span>
+          <span class="gh-desc">Followers</span>
+        </div>
+      </div>
+      <div class="gh-card">
+        <div class="gh-stat-block">
+          <span class="gh-num">${totalStars}</span>
+          <span class="gh-desc">Total Stars</span>
+        </div>
+      </div>
+      <div class="gh-card">
+        <div class="gh-stat-block">
+          <span class="gh-num">${totalForks}</span>
+          <span class="gh-desc">Total Forks</span>
+        </div>
+      </div>
+      <div class="gh-card" style="flex:1; min-width:160px;">
+        <div style="width:100%">
+          <div style="font-size:0.74rem; color:var(--muted); margin-bottom:0.4rem;">Top Languages</div>
+          <div class="gh-langs">
+            ${topLangs.map(l=>`<span class="gh-lang-pill"><span class="gh-lang-dot" style="background:${langColors[l]||'#888'}"></span>${l}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="gh-card" style="flex:1; min-width:160px;">
+        <div style="width:100%">
+          <div class="gh-activity-label">Activity (12 weeks)</div>
+          <div class="activity-grid" id="act-grid">
+            ${activity.map((v,i)=>`<div class="activity-bar" data-h="${Math.round(v*100)}" style="height:4px"></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Animate bars in
+    setTimeout(() => {
+      document.querySelectorAll('.activity-bar').forEach(bar => {
+        bar.style.height = bar.dataset.h + '%';
+        bar.classList.add('active');
+      });
+    }, 200);
+
+  } catch(err) {
+    container.innerHTML = `<div class="gh-error">
+      Could not load GitHub stats. 
+      <a href="https://github.com/${GITHUB_USER}" target="_blank" style="color:var(--gold)">View profile →</a>
+    </div>`;
+  }
+}
+
+fetchGitHub();
+</script>
+</body>
+</html>
