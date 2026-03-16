@@ -227,63 +227,39 @@ nav {
 }
 .github-stats-row {
   max-width: 1000px; margin: 0 auto;
-  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  display: flex; align-items: flex-start; gap: 1.5rem; flex-wrap: wrap;
 }
 .gh-label {
   display: flex; align-items: center; gap: 0.5rem;
   font-size: 0.82rem; text-transform: uppercase;
   letter-spacing: 0.08em; color: var(--muted);
   flex-shrink: 0;
+  padding-top: 0.4rem;
 }
 .gh-label svg { color: var(--gold); }
 .gh-username {
   font-weight: 600; color: var(--gold);
   font-size: 0.9rem; margin-left: 0.2rem;
 }
-.gh-cards { display: flex; gap: 1rem; flex-wrap: wrap; flex: 1; }
-.gh-card {
-  background: var(--surface);
+
+/* Stats image cards */
+.gh-stats-imgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  flex: 1;
+}
+.gh-stats-imgs img {
+  border-radius: 8px;
   border: 0.5px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.85rem; color: var(--text);
-  transition: background 0.3s, border 0.3s;
-  min-width: 110px;
+  height: 160px;
+  max-width: 100%;
+  transition: border 0.3s, transform 0.2s;
 }
-.gh-card .gh-num {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem; font-weight: 600;
-  color: var(--gold); line-height: 1;
+.gh-stats-imgs img:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
 }
-.gh-card .gh-desc { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
-.gh-stat-block { display: flex; flex-direction: column; }
-.gh-loading { color: var(--muted); font-size: 0.85rem; font-style: italic; }
-.gh-error { color: #e05; font-size: 0.82rem; }
-.gh-langs { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
-.gh-lang-pill {
-  background: var(--tag-bg);
-  border: 0.5px solid var(--border);
-  border-radius: 12px;
-  padding: 0.18rem 0.6rem;
-  font-size: 0.74rem; color: var(--text2);
-}
-.gh-lang-dot {
-  display: inline-block; width: 8px; height: 8px;
-  border-radius: 50%; margin-right: 3px; vertical-align: middle;
-}
-/* Activity bar */
-.gh-activity { flex: 1; min-width: 200px; }
-.gh-activity-label { font-size: 0.74rem; color: var(--muted); margin-bottom: 0.35rem; }
-.activity-grid { display: flex; gap: 2px; align-items: flex-end; height: 32px; }
-.activity-bar {
-  flex: 1; border-radius: 2px;
-  background: var(--gold);
-  opacity: 0.15;
-  transition: opacity 0.2s, height 0.8s ease;
-  min-height: 3px;
-}
-.activity-bar.active { opacity: 0.85; }
 
 /* ── MAIN ── */
 main { max-width: 1000px; margin: 0 auto; padding: 0 2rem 4rem; }
@@ -516,7 +492,7 @@ footer span { color: var(--gold-lt); }
   .statement-box { padding: 1.8rem 1.5rem; }
   .hero-text h1 { font-size: 2rem; }
   .github-banner { padding: 1.2rem 1.5rem; }
-  .gh-cards { gap: 0.7rem; }
+  .gh-stats-imgs img { height: 120px; }
 }
 </style>
 </head>
@@ -550,28 +526,27 @@ footer span { color: var(--gold-lt); }
 <!-- HERO -->
 <div class="hero">
   <div class="avatar" style="padding:0; overflow:hidden;">
-  <img src="profile.jpeg"
-       alt="sandun Dilshan"
-       style="width:100%; height:100%; object-fit:cover; border-radius:50%;" />
-</div>
+    <img src="profile.jpeg"
+         alt="Sandun Dilshan"
+         style="width:100%; height:100%; object-fit:cover; border-radius:50%;" />
+  </div>
   <div class="hero-text">
     <h1>Sandun Dilshan Abeywickrama</h1>
     <div class="hero-title">B.IT. in ICT &nbsp;·&nbsp; Fresh Graduate &nbsp;·&nbsp; Available for Opportunities</div>
     <p class="hero-bio">
-     I am a results-driven B.IT. graduate in Information and Communication Technology with a passion for solving real-world challenges through technology. Experienced in software development, embedded systems, and data-driven problem solving.</br>
-
-I am eager to contribute to innovative projects and pursue graduate scholarships to push the boundaries of technology further. My goal is to combine creativity and technical expertise to develop solutions that make an impact.
+      I am a results-driven B.IT. graduate in Information and Communication Technology with a passion for solving real-world challenges through technology. Experienced in software development, embedded systems, and data-driven problem solving.<br/>
+      I am eager to contribute to innovative projects and pursue graduate scholarships to push the boundaries of technology further. My goal is to combine creativity and technical expertise to develop solutions that make an impact.
     </p>
     <div class="hero-contacts">
-      <a class="contact-pill" href="mailto:alex.santos@email.com">
+      <a class="contact-pill" href="mailto:dilshansaduu@email.com">
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M1 4l7 5 7-5" stroke="currentColor" stroke-width="1.4"/></svg>
         dilshansaduu@email.com
       </a>
-      <a class="contact-pill" href="#">
+      <a class="contact-pill" href="https://linkedin.com/in/sandun-dilshan-7" target="_blank">
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><circle cx="5.5" cy="5.5" r="1.2" fill="currentColor"/><path d="M3 14v-5h2v5M7 14V9c0-1.1.9-2 2-2s2 .9 2 2v5M13 14V9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
         linkedin.com/in/sandun-dilshan-7
       </a>
-      <a class="contact-pill" href="#">
+      <a class="contact-pill" href="https://github.com/sandun-dilshan" target="_blank">
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.13 1 1 4.13 1 8c0 3.09 2 5.71 4.79 6.64.35.06.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.62 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.93-1.55-.18-3.19-.78-3.19-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.89.07-1.85 0 0 .59-.19 1.92.72A6.7 6.7 0 0 1 8 4.5c.6 0 1.2.08 1.76.23 1.33-.91 1.92-.72 1.92-.72.38.96.14 1.67.07 1.85.45.49.72 1.12.72 1.88 0 2.69-1.64 3.28-3.2 3.45.25.22.48.65.48 1.31v1.94c0 .19.13.4.48.34A7 7 0 0 0 15 8c0-3.87-3.13-7-7-7z" fill="currentColor"/></svg>
         github.com/sandun-dilshan
       </a>
@@ -588,10 +563,22 @@ I am eager to contribute to innovative projects and pursue graduate scholarships
   <div class="github-stats-row">
     <div class="gh-label">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-      GitHub Live Stats &nbsp;·&nbsp; <span class="gh-username">@sandun-dilshan</span>
+      GitHub Stats &nbsp;·&nbsp; <span class="gh-username">@sandun-dilshan</span>
     </div>
-    <div class="gh-cards" id="gh-cards">
-      <div class="gh-loading">Loading GitHub data...</div>
+    <div class="gh-stats-imgs">
+      <img
+        src="https://github-readme-stats-cxe86woub-dilshansaduu-1833s-projects.vercel.app/api?username=sandun-dilshan&count_private=true&show_icons=true&theme=dark&hide_border=true&title_color=c8a84b&icon_color=c8a84b&text_color=b0a898&bg_color=1a2236"
+        alt="Sandun's GitHub Stats"
+      />
+      <img
+        src="https://github-readme-stats-cxe86woub-dilshansaduu-1833s-projects.vercel.app/api/top-langs?username=sandun-dilshan&count_private=true&layout=compact&theme=dark&hide_border=true&title_color=c8a84b&text_color=b0a898&bg_color=1a2236"
+        alt="Top Languages"
+      />
+      <img
+        src="https://github-readme-stats-cxe86woub-dilshansaduu-1833s-projects.vercel.app/api/wakatime?username=sandun-dilshan&theme=dark&hide_border=true&title_color=c8a84b&text_color=b0a898&bg_color=1a2236"
+        alt="WakaTime Stats"
+        onerror="this.style.display='none'"
+      />
     </div>
   </div>
 </div>
@@ -635,7 +622,7 @@ I am eager to contribute to innovative projects and pursue graduate scholarships
           <h3>Bachelor of Information and Communication Technology (Hons)</h3>
           <div class="edu-inst">South Eastern University of Sri Lanka</div>
           <div class="edu-year">2021 – 2025</div>
-          <p>Specialisation in Software Technology. Final year project and Reserch: Smart Motorcycle Control System (IoT) With Biometric Authentication and Mobile Application.</p>
+          <p>Specialisation in Software Technology. Final year project and Research: Smart Motorcycle Control System (IoT) With Biometric Authentication and Mobile Application.</p>
         </div>
       </div>
       <div class="edu-item reveal-left">
@@ -644,7 +631,6 @@ I am eager to contribute to innovative projects and pursue graduate scholarships
           <h3>Advanced Level — Engineering Technology, Science for Technology, ICT</h3>
           <div class="edu-inst">Elakaka Secondary School, Galle</div>
           <div class="edu-year">2016 – 2018</div>
-         <!--<p>Achieved 3 A grades. Island rank: 47. Represented school at National ICT Olympiad.</p> --> 
         </div>
       </div>
     </div>
@@ -840,12 +826,10 @@ I am eager to contribute to innovative projects and pursue graduate scholarships
     </div>
     <div class="statement-box reveal">
       <h3>Why I Am Applying for a Master's Scholarship</h3>
-  <p>My journey in Information and Communication Technology has taught me that technology is most meaningful when it solves real-world problems. Growing up in Sri Lanka, I observed how limited infrastructure, security challenges, and transportation issues affect communities with fewer resources. These experiences shaped the way I approach every project, research paper, and innovation throughout my undergraduate years.</p>
-
-  <p>I now seek a Master's degree in Computer Engineering, Embedded Systems, or Artificial Intelligence at a world-class institution — not only to advance my skills but to develop technologies that create tangible societal impact. My work on the Smart Motorcycle Security System, combining biometric authentication, GPS tracking, and IoT-enabled mobile applications, has demonstrated how context-specific engineering solutions can improve safety, accessibility, and efficiency in everyday life.</p>
-
-  <p>I am committed to applying this knowledge in Sri Lanka — through industry, academic research, or mentorship — and to guiding the next generation of engineers who, like me, see a degree not as an endpoint but as the beginning of meaningful, real-world problem solving.</p>
-</div>
+      <p>My journey in Information and Communication Technology has taught me that technology is most meaningful when it solves real-world problems. Growing up in Sri Lanka, I observed how limited infrastructure, security challenges, and transportation issues affect communities with fewer resources. These experiences shaped the way I approach every project, research paper, and innovation throughout my undergraduate years.</p>
+      <p>I now seek a Master's degree in Computer Engineering, Embedded Systems, or Artificial Intelligence at a world-class institution — not only to advance my skills but to develop technologies that create tangible societal impact. My work on the Smart Motorcycle Security System, combining biometric authentication, GPS tracking, and IoT-enabled mobile applications, has demonstrated how context-specific engineering solutions can improve safety, accessibility, and efficiency in everyday life.</p>
+      <p>I am committed to applying this knowledge in Sri Lanka — through industry, academic research, or mentorship — and to guiding the next generation of engineers who, like me, see a degree not as an endpoint but as the beginning of meaningful, real-world problem solving.</p>
+    </div>
   </section>
 
 </main>
@@ -893,99 +877,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.reveal, .reveal-left, .stagger').forEach(el => observer.observe(el));
-
-/* ── GITHUB LIVE STATS ── */
-const GITHUB_USER = 'sandun-dilshan'; // ← Replace with your real GitHub username
-
-const langColors = {
-  Python: '#3572A5', JavaScript: '#f1e05a', Java: '#b07219',
-  'C++': '#f34b7d', TypeScript: '#2b7489', HTML: '#e34c26',
-  CSS: '#563d7c', Shell: '#89e051', C: '#555555', Jupyter: '#DA5B0B'
-};
-
-async function fetchGitHub() {
-  const container = document.getElementById('gh-cards');
-  try {
-    const [userRes, reposRes] = await Promise.all([
-      fetch(`https://api.github.com/users/${GITHUB_USER}`),
-      fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=updated`)
-    ]);
-
-    if (!userRes.ok) throw new Error('User not found');
-    const user  = await userRes.json();
-    const repos = reposRes.ok ? await reposRes.json() : [];
-
-    const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
-    const totalForks = repos.reduce((s, r) => s + (r.forks_count || 0), 0);
-
-    // Top languages
-    const langMap = {};
-    repos.forEach(r => { if (r.language) langMap[r.language] = (langMap[r.language]||0)+1; });
-    const topLangs = Object.entries(langMap).sort((a,b)=>b[1]-a[1]).slice(0,5).map(e=>e[0]);
-
-    // Mock activity (12 weeks) — real data needs OAuth
-    const activity = Array.from({length:12}, () => Math.random());
-
-    container.innerHTML = `
-      <div class="gh-card">
-        <div class="gh-stat-block">
-          <span class="gh-num">${user.public_repos}</span>
-          <span class="gh-desc">Repositories</span>
-        </div>
-      </div>
-      <div class="gh-card">
-        <div class="gh-stat-block">
-          <span class="gh-num">${user.followers}</span>
-          <span class="gh-desc">Followers</span>
-        </div>
-      </div>
-      <div class="gh-card">
-        <div class="gh-stat-block">
-          <span class="gh-num">${totalStars}</span>
-          <span class="gh-desc">Total Stars</span>
-        </div>
-      </div>
-      <div class="gh-card">
-        <div class="gh-stat-block">
-          <span class="gh-num">${totalForks}</span>
-          <span class="gh-desc">Total Forks</span>
-        </div>
-      </div>
-      <div class="gh-card" style="flex:1; min-width:160px;">
-        <div style="width:100%">
-          <div style="font-size:0.74rem; color:var(--muted); margin-bottom:0.4rem;">Top Languages</div>
-          <div class="gh-langs">
-            ${topLangs.map(l=>`<span class="gh-lang-pill"><span class="gh-lang-dot" style="background:${langColors[l]||'#888'}"></span>${l}</span>`).join('')}
-          </div>
-        </div>
-      </div>
-      <div class="gh-card" style="flex:1; min-width:160px;">
-        <div style="width:100%">
-          <div class="gh-activity-label">Activity (12 weeks)</div>
-          <div class="activity-grid" id="act-grid">
-            ${activity.map((v,i)=>`<div class="activity-bar" data-h="${Math.round(v*100)}" style="height:4px"></div>`).join('')}
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Animate bars in
-    setTimeout(() => {
-      document.querySelectorAll('.activity-bar').forEach(bar => {
-        bar.style.height = bar.dataset.h + '%';
-        bar.classList.add('active');
-      });
-    }, 200);
-
-  } catch(err) {
-    container.innerHTML = `<div class="gh-error">
-      Could not load GitHub stats. 
-      <a href="https://github.com/${GITHUB_USER}" target="_blank" style="color:var(--gold)">View profile →</a>
-    </div>`;
-  }
-}
-
-fetchGitHub();
 </script>
 </body>
 </html>
