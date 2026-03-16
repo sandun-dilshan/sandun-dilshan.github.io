@@ -568,17 +568,14 @@ footer span { color: var(--gold-lt); }
     </div>
     <div class="gh-stats-imgs">
       <img
-        src="https://github-readme-stats-cxe86woub-dilshansaduu-1833s-projects.vercel.app/api?username=sandun-dilshan&count_private=true&show_icons=true&theme=dark&hide_border=true&title_color=c8a84b&icon_color=c8a84b&text_color=b0a898&bg_color=1a2236"
+        src="https://github-readme-stats-ten-delta-34.vercel.app/api?username=sandun-dilshan&count_private=true&show_icons=true&theme=dark&hide_border=true&title_color=c8a84b&icon_color=c8a84b&text_color=b0a898&bg_color=1a2236"
         alt="Sandun's GitHub Stats"
+        crossorigin="anonymous"
       />
       <img
-        src="https://github-readme-stats-cxe86woub-dilshansaduu-1833s-projects.vercel.app/api/top-langs?username=sandun-dilshan&count_private=true&layout=compact&theme=dark&hide_border=true&title_color=c8a84b&text_color=b0a898&bg_color=1a2236"
+        src="https://github-readme-stats-ten-delta-34.vercel.app/api/top-langs?username=sandun-dilshan&count_private=true&layout=compact&theme=dark&hide_border=true&title_color=c8a84b&text_color=b0a898&bg_color=1a2236"
         alt="Top Languages"
-      />
-      <img
-        src="https://github-readme-stats-cxe86woub-dilshansaduu-1833s-projects.vercel.app/api/wakatime?username=sandun-dilshan&theme=dark&hide_border=true&title_color=c8a84b&text_color=b0a898&bg_color=1a2236"
-        alt="WakaTime Stats"
-        onerror="this.style.display='none'"
+        crossorigin="anonymous"
       />
     </div>
   </div>
@@ -871,4 +868,40 @@ window.addEventListener('scroll', () => {
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
-      e.target.classLi
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .stagger').forEach(el => observer.observe(el));
+
+/* ── GITHUB STATS: load via JS to bypass Cloudflare image blocking ── */
+const VERCEL = 'https://github-readme-stats-ten-delta-34.vercel.app';
+const USER   = 'sandun-dilshan';
+const PARAMS = '&count_private=true&theme=dark&hide_border=true&title_color=c8a84b&icon_color=c8a84b&text_color=b0a898&bg_color=1a2236';
+
+function loadStats() {
+  const container = document.querySelector('.gh-stats-imgs');
+  if (!container) return;
+  container.innerHTML = '';
+  const urls = [
+    VERCEL + '/api?username=' + USER + '&show_icons=true' + PARAMS,
+    VERCEL + '/api/top-langs?username=' + USER + '&layout=compact' + PARAMS
+  ];
+  urls.forEach(function(url) {
+    const img = new Image();
+    img.alt = 'GitHub Stats';
+    img.style.cssText = 'border-radius:8px;border:0.5px solid var(--border);height:160px;max-width:100%;transition:border 0.3s,transform 0.2s;';
+    img.onmouseover = function() { img.style.transform='translateY(-2px)'; img.style.borderColor='var(--gold)'; };
+    img.onmouseout  = function() { img.style.transform=''; img.style.borderColor=''; };
+    img.onerror = function() { img.style.display='none'; };
+    img.src = url;
+    container.appendChild(img);
+  });
+}
+
+loadStats();
+</script>
+</body>
+</html>
